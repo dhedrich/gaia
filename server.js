@@ -29,7 +29,7 @@ app.get('/sample', function (req, res) {
 
     // E.g : http://localhost:3000/name?firstname=Mike&lastname=Will
     // so, first name = Mike and last name = Will
-    var process = spawn('python', ["./Adafruit_Python_DHT/examples/AdafruitDHT.py",
+    var process = spawn('python', ["./AdafruitDHT.py",
         "11",
         "4"])
 
@@ -47,12 +47,12 @@ app.get('/test', function(req, res) {
         args: ["11", "4"]
     }
 
-    pythonShell.run("./Adafruit_Python_DHT/examples/AdafruitDHT.py", options, function(err, result) {
+    pythonShell.run("./AdafruitDHT.py", options, function(err, result) {
         if (err) throw err
         console.log(result)
     })
 })
 
 app.listen(PORT, function () {
-    console.log("App running on port " + PORT + "!")
+    console.log(`App running on port ${PORT}!`)
 })
