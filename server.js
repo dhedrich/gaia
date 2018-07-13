@@ -1,5 +1,6 @@
 var express = require('express')
 var bodyParser = require('body-parser')
+var pythonShell = require('python-shell')
 
 
 // initialize express
@@ -15,11 +16,11 @@ app.use(bodyParser.json())
 
 
 // render homepage
-app.get('/name', function (req, res) {
+app.get('/sample', function (req, res) {
     // Use child_process.spawn method from 
     // child_process module and assign it
     // to variable spawn
-    var spawn = require("child_process").spawn;
+    var spawn = require("child_process").spawn
 
     // Parameters passed in spawn -
     // 1. type_of_script
@@ -28,14 +29,27 @@ app.get('/name', function (req, res) {
 
     // E.g : http://localhost:3000/name?firstname=Mike&lastname=Will
     // so, first name = Mike and last name = Will
-    var process = spawn('python', ["./hello.py",
-        req.query.firstname,
-        req.query.lastname]);
+    var process = spawn('python', ["./Adafruit_Python_DHT/examples/AdafruitDHT.py",
+        "11",
+        "4"])
 
     // Takes stdout data from script which executed
     // with arguments and send this data to res object
     process.stdout.on('data', function (data) {
-        res.send(data.toString());
+        console.log(data.toString())
+        res.send(data.toString())
+    })
+})
+
+app.get('/test', function(req, res) {
+    var options = {
+        // designate GPIO pins to be used
+        args: ["11", "4"]
+    }
+
+    pythonShell.run("./Adafruit_Python_DHT/examples/AdafruitDHT.py", options, function(err, result) {
+        if (err) throw err
+        console.log(result)
     })
 })
 
