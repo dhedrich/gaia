@@ -1,0 +1,25 @@
+{
+  "name": "gaia",
+  "version": "1.0.0",
+  "description": "multipurpose temperature and humidity manager",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dhedrich/gaia.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dhedrich/gaia/issues"
+  },
+  "homepage": "https://github.com/dhedrich/gaia#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "exphbs": "^1.2.0",
+    "express": "^4.16.3"
+  }
+}
