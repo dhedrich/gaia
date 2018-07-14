@@ -49,11 +49,14 @@ app.get('/test', function(req, res) {
 
     // run python script to take current temperature and humidity
     pythonShell.run("./AdafruitDHT.py", options, function(err, result) {
-        if (err) throw err
-        newEntry.timestamp = moment().format('MM/DD/YYYY h:mm:ss A')
-        newEntry.temp = parseInt(result[0])
-        newEntry.rh = parseInt(result[1])
-        console.log(newEntry)
+        if (err) {
+            throw err
+        } else {
+            newEntry.timestamp = moment().format('MM/DD/YYYY h:mm:ss A')
+            newEntry.temp = parseInt(result[0])
+            newEntry.rh = parseInt(result[1])
+            console.log(newEntry)
+        }
     })
 })
 
@@ -67,23 +70,26 @@ app.get('/post', function(req, res) {
 
     // run python script to take current temperature and humidity
     pythonShell.run("./AdafruitDHT.py", options, function(err, result) {
-        if (err) throw err
-        newEntry.timestamp = moment().format('MM/DD/YYYY h:mm:ss A')
-        newEntry.temp = parseInt(result[0])
-        newEntry.rh = parseInt(result[1])
-        // console.log(newEntry)
-        db.data.insert(newEntry, function(error, success) {
-            // Log any errors from mongojs
-            if (error) {
-                console.log(error);
-                res.send(error)
-            } else {
-                // Otherwise, send the mongojs response to the browser
-                // This will fire off the success function of the ajax request
-                console.log(success)
-                res.send(success)
-            }
-        })
+        if (err) {
+            console.log(err)
+        } else {
+            newEntry.timestamp = moment().format('MM/DD/YYYY h:mm:ss A')
+            newEntry.temp = parseInt(result[0])
+            newEntry.rh = parseInt(result[1])
+
+            db.data.insert(newEntry, function(error, success) {
+                // Log any errors from mongojs
+                if (error) {
+                    console.log(error);
+                    res.send(error)
+                } else {
+                    // Otherwise, send the mongojs response to the browser
+                    // This will fire off the success function of the ajax request
+                    console.log(success)
+                    res.send(success)
+                }
+            })
+        }
     })
 })
 
