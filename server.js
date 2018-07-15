@@ -4,6 +4,15 @@ var pythonShell = require('python-shell')
 var moment = require('moment')
 var mongojs = require('mongojs')
 var request = require('supertest')
+var nodemailer = require('nodemailer')
+
+var transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: 'gaiaprojectapp@gmail.com',
+        pass: 'Xotjrl06'
+    }
+})
 
 // Database configuration
 var db = mongojs('test', ['data'])
@@ -24,40 +33,6 @@ app.use(bodyParser.urlencoded({ extended: true }))
 // Use express.static to serve the public folder as a static directory
 app.use(express.static("public"))
 app.use(bodyParser.json())
-
-app.get('/dbtest', function(req, res) {
-    console.log("DBTEST")
-    console.log(moment().format('MM/DD/YYYY h:mm:ss A'))
-    db.data.find(function(error, found) {
-        if (error) {
-            console.log(error)
-        } else {
-            console.log(found)
-            res.send(found)
-        }
-    })
-})
-
-app.get('/test', function(req, res) {
-    // grab current temperature and humidity using DHT11 sensor on Raspberry Pi
-    var options = {
-    // designate which GPIO pins to be used
-        args: ["11", "4"]
-    }
-    var newEntry = {}
-
-    // run python script to take current temperature and humidity
-    pythonShell.run("./AdafruitDHT.py", options, function(err, result) {
-        if (err) {
-            throw err
-        } else {
-            newEntry.timestamp = moment().format('MM/DD/YYYY h:mm:ss A')
-            newEntry.temp = parseInt(result[0])
-            newEntry.rh = parseInt(result[1])
-            console.log(newEntry)
-        }
-    })
-})
 
 app.get('/post', function(req, res) {
     // take sensor reading and post timestamped temp/rh data to db
@@ -95,16 +70,43 @@ app.get('/post', function(req, res) {
                     console.log(error)
                 } else {
                     // console.log(found)
+                    var email = found[0].email
                     var rhHigh = found[0].rhHigh
                     var rhLow = found[0].rhLow
                     var tempHigh = found[0].tempHigh
                     var tempLow = found[0].tempLow
+                    var text = ''
                     
-                    if (newEntry.temp > tempHigh || newEntry.temp < tempLow) {
-                        console.log("Temp out of range")
-                    } else if (newEntry.rh > rhHigh || newEntry.rh < rhLow) {
-                        console.log("Humidity out of range")
+                    if (newEntry.temp > tempHigh || newEntry.temp < tempLow || newEntry.rh > rhHigh || newEntry.rh < rhLow) {
+                        console.log("Temp/RH out of range")
+                        text = `
+                        Dear user,
+                        
+                        Gaia has detected that the local temperature and/or humidity is out of your specified range.
+                        
+                        Your range: ${tempLow} - ${tempHigh} °C
+                        Current temp: ${newEntry.temp} °C
+
+                        Your range: ${rhLow} - ${rhHigh} %
+                        Current humidity: ${newEntry.rh} %
+                        
+                        Thank you for using Gaia.`
                     }
+
+                    var mailOptions = {
+                        from: 'gaiaprojectapp@gmail.com',
+                        to: email,
+                        subject: 'Gaia: Out of Range',
+                        text: text
+                    }
+
+                    transporter.sendMail(mailOptions, function(error, info) {
+                        if (error) {
+                            console.log(error)
+                        } else {
+                            console.log(`Email sent: ${info.response}`)
+                        }
+                    })
                 }
             })
         }
