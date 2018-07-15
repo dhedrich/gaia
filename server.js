@@ -89,6 +89,24 @@ app.get('/post', function(req, res) {
                     res.send(success)
                 }
             })
+
+            db.emails.find(function(error, found) {
+                if (error) {
+                    console.log(error)
+                } else {
+                    // console.log(found)
+                    var rhHigh = found[0].rhHigh
+                    var rhLow = found[0].rhLow
+                    var tempHigh = found[0].tempHigh
+                    var tempLow = found[0].tempLow
+                    
+                    if (newEntry.temp > tempHigh || newEntry.temp < tempLow) {
+                        console.log("Temp out of range")
+                    } else if (newEntry.rh > rhHigh || newEntry.rh < rhLow) {
+                        console.log("Humidity out of range")
+                    }
+                }
+            })
         }
     })
 })
