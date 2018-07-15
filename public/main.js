@@ -1,4 +1,4 @@
-$(document).ready(
+$(document).ready(function() {
   // grab all temp/rh data in db, render to homepage
   $.ajax({
     method: 'GET',
@@ -25,13 +25,6 @@ $(document).ready(
       method: 'POST',
       url: '/user',
       data: formData
-      // dataType: "json",
-      // success: function(data) {
-      //   alert(data)
-      // },
-      // failure: function(err) {
-      //   alert(err)
-      // }
     })
     .done(function (data) {
       console.log('SUCCESS =================', data)
@@ -45,35 +38,35 @@ $(document).ready(
     $("#rhHigh").val('')
     $("#rhLow").val('')
   })
-)
 
-function renderTable(res) {
-  // empty recents table
-  $('#recentsTable').empty().append(`<tr>
-      <th>Timestamp</th>
-      <th>Temperature</th>
-      <th>Humidity</th>
-    </tr>`)
+  function renderTable(res) {
+    // empty recents table
+    $('#recentsTable').empty().append(`<tr>
+        <th>Timestamp</th>
+        <th>Temperature</th>
+        <th>Humidity</th>
+      </tr>`)
 
-  // set max length of table to 10 entries
-  var limit = 0
-  if (res.length > 10) {
-    limit = res.length - 10
+    // set max length of table to 10 entries
+    var limit = 0
+    if (res.length > 10) {
+      limit = res.length - 10
+    }
+    
+    // post data to table
+    for (var i = res.length - 1; i >= limit; i--) {
+      var timestamp = res[i].timestamp
+      var temp = res[i].temp
+      var rh = res[i].rh
+      $('#recentsTable').append(`<tr>
+        <td>${timestamp}</td>
+        <td>${temp} °C</td>
+        <td>${rh} %</td>
+      </tr>`)
+    }
+
+    // update current temp/rh
+    $('#currTemp').text(`${res[res.length -1].temp} °C`)
+    $('#currRH').text(`${res[res.length -1].rh} %`)
   }
-  
-  // post data to table
-  for (var i = res.length - 1; i >= limit; i--) {
-    var timestamp = res[i].timestamp
-    var temp = res[i].temp
-    var rh = res[i].rh
-    $('#recentsTable').append(`<tr>
-      <td>${timestamp}</td>
-      <td>${temp} °C</td>
-      <td>${rh} %</td>
-    </tr>`)
-  }
-
-  // update current temp/rh
-  $('#currTemp').text(`${res[res.length -1].temp} °C`)
-  $('#currRH').text(`${res[res.length -1].rh} %`)
-}
+})

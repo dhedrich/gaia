@@ -29,13 +29,13 @@
     <br>
 
     <form id="alertForm">
-        Enter email for alert delivery<br><input type="email" placeholder="john.doe@gaia.com"><br>
+        Enter email for alert delivery<br><input id="email" type="email" placeholder="john.doe@gaia.com" required><br>
         Enter acceptable temperature range (Celsius only, sorry!)<br>
-        <input id="tempHigh" type="number" placeholder="low">°
-        <input id="tempLow" type="number" placeholder="high">°<br>
+        <input id="tempHigh" type="number" placeholder="low" required>°
+        <input id="tempLow" type="number" placeholder="high" required>°<br>
         Enter acceptable humidity range<br>
-        <input id="rhHigh" type="number" placeholder="low">%
-        <input id="rhLow" type="number" placeholder="high">%<br>
+        <input id="rhHigh" type="number" placeholder="low" required>%
+        <input id="rhLow" type="number" placeholder="high" required>%<br>
         <input id="submit" type="submit" value="Submit">
     </form>
 

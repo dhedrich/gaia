@@ -106,7 +106,9 @@ app.get('/history', function(req, res) {
     })
 })
 
-// app.post('/user', function())
+app.post('/user', function(req, res) {
+    console.log(req.body)
+})
 
 app.listen(PORT, function() {
     console.log(`App running on port ${PORT}!`)
