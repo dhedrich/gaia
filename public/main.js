@@ -16,10 +16,10 @@ $(document).ready(function() {
     event.preventDefault()
     var formData = {
       email : $("#email").val().trim(),
-      tempHigh : $("#tempHigh").val().trim(),
-      tempLow : $("#tempLow").val().trim(),
-      rhHigh : $("#rhHigh").val().trim(),
-      rhLow : $("#rhLow").val().trim()
+      tempHigh : parseInt($("#tempHigh").val().trim()),
+      tempLow : parseInt($("#tempLow").val().trim()),
+      rhHigh : parseInt($("#rhHigh").val().trim()),
+      rhLow : parseInt($("#rhLow").val().trim())
     }
     $.ajax({
       method: 'POST',

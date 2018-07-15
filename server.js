@@ -107,7 +107,39 @@ app.get('/history', function(req, res) {
 })
 
 app.post('/user', function(req, res) {
+    console.log('USER')
     console.log(req.body)
+    db.emails.find(function(error, found) {
+        if (error) {
+            console.log(error)
+        } else {
+            // console.log(found[0].email)
+            // console.log(found[0].tempLow)
+            // console.log(found[0].tempHigh)
+            // console.log(found[0].rhLow)
+            // console.log(found[0].rhHigh)
+            res.send(found)
+            if (found) {
+                db.emails.update(
+                    {email: {$exists: true}}, 
+                    {$set: {
+                        email: req.body.email,
+                        tempLow: req.body.tempLow,
+                        tempHigh: req.body.tempHigh,
+                        rhLow: req.body.rhLow,
+                        rhHigh: req.body.rhHigh
+                    }},
+                    function(err, updated) {
+                        if (err || !updated){
+                            console.log(err)
+                        } else {
+                            console.log(updated)
+                        }
+                    }
+                )
+            }
+        }
+    })
 })
 
 app.listen(PORT, function() {
