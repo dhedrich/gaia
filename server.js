@@ -113,12 +113,6 @@ app.post('/user', function(req, res) {
         if (error) {
             console.log(error)
         } else {
-            // console.log(found[0].email)
-            // console.log(found[0].tempLow)
-            // console.log(found[0].tempHigh)
-            // console.log(found[0].rhLow)
-            // console.log(found[0].rhHigh)
-            res.send(found)
             if (found) {
                 db.emails.update(
                     {email: {$exists: true}}, 
