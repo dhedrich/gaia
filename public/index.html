@@ -10,10 +10,10 @@
     <h1>Gaia</h1>
 
     <h2>current temperature</h2>
-    <div id="currTemp">XX°</div>
+    <div id="currTemp">XX °C</div>
 
     <h2>current humidity</h2>
-    <div id="currRH">XX%</div>
+    <div id="currRH">XX %</div>
 
     <h2>recents</h2>
     <table id="recentsTable">
@@ -24,7 +24,17 @@
         </tr>
     </table>
 
-    <form></form>
+    <br>
+
+    <form>
+        Enter email for alert delivery<br><input type="email" placeholder="john.doe@gaia.com"><br>
+        Enter acceptable temperature range (Celsius only, sorry!)<br>
+        <input id="tempHigh" type="number" placeholder="low">°
+        <input id="tempLow" type="number" placeholder="high">°<br>
+        Enter acceptable humidity range<br>
+        <input id="rhHigh" type="number" placeholder="low">%
+        <input id="rhLow" type="number" placeholder="high">%
+    </form>
 
     <script
   src="https://code.jquery.com/jquery-3.3.1.min.js"

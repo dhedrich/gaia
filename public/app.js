@@ -34,8 +34,12 @@ function renderTable(res) {
     var rh = res[i].rh
     $('#recentsTable').append(`<tr>
       <td>${timestamp}</td>
-      <td>${temp}</td>
-      <td>${rh}</td>
+      <td>${temp} °C</td>
+      <td>${rh} %</td>
     </tr>`)
   }
+
+  // update current temp/rh
+  $('#currTemp').text(`${res[0].temp} °C`)
+  $('#currRH').text(`${res[0].rh} %`)
 }
