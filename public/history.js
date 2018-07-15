@@ -21,14 +21,8 @@ function renderTable(res) {
       <th>Humidity</th>
     </tr>`)
 
-  // set max length of table to 10 entries
-  var limit = 0
-  if (res.length > 10) {
-    limit = res.length - 10
-  }
-  
   // post data to table
-  for (var i = res.length - 1; i >= limit; i--) {
+  for (var i = res.length - 1; i >= 0; i--) {
     var timestamp = res[i].timestamp
     var temp = res[i].temp
     var rh = res[i].rh
@@ -40,6 +34,6 @@ function renderTable(res) {
   }
 
   // update current temp/rh
-  $('#currTemp').text(`${res[0].temp} °C`)
-  $('#currRH').text(`${res[0].rh} %`)
+  $('#currTemp').text(`${res[res.length -1].temp} °C`)
+  $('#currRH').text(`${res[res.length -1].rh} %`)
 }

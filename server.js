@@ -106,6 +106,8 @@ app.get('/history', function(req, res) {
     })
 })
 
+// app.post('/user', function())
+
 app.listen(PORT, function() {
     console.log(`App running on port ${PORT}!`)
     // sample new sensor data every 15 minutes and post it to db by calling /post route
