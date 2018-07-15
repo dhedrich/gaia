@@ -6,13 +6,12 @@ var mongojs = require('mongojs')
 var request = require('supertest')
 
 // Database configuration
-// Use mongojs to hook the database to the db variable
 var db = mongojs('test', ['data'])
 var userEmail = mongojs('test', ['emails'])
 
-// This makes sure that any errors are logged if mongodb runs into an issue
+// MongoDB error handling
 db.on("error", function(error) {
-  console.log("Database Error:", error)
+    console.log("Database Error:", error)
 })
 
 // initialize express
@@ -25,8 +24,6 @@ app.use(bodyParser.urlencoded({ extended: true }))
 // Use express.static to serve the public folder as a static directory
 app.use(express.static("public"))
 app.use(bodyParser.json())
-
-// render homepage
 
 app.get('/dbtest', function(req, res) {
     console.log("DBTEST")
@@ -63,6 +60,7 @@ app.get('/test', function(req, res) {
 })
 
 app.get('/post', function(req, res) {
+    // take sensor reading and post timestamped temp/rh data to db
     console.log("POST")
     var options = {
     // designate which GPIO pins to be used
@@ -106,10 +104,11 @@ app.get('/history', function(req, res) {
             res.send(found)
         }
     })
+})
 
 app.listen(PORT, function() {
     console.log(`App running on port ${PORT}!`)
-    // sample new temp/rh data every 15 minutes and post it to db by calling /post route
+    // sample new sensor data every 15 minutes and post it to db by calling /post route
     setInterval(function() {
         request(app)
             .get('/post')
@@ -120,7 +119,3 @@ app.listen(PORT, function() {
         })
     }, 900000)
 })
-
-
-
-
