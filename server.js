@@ -2,11 +2,13 @@ var express = require('express')
 var bodyParser = require('body-parser')
 var pythonShell = require('python-shell')
 var moment = require('moment')
-var mongojs = require("mongojs")
+var mongojs = require('mongojs')
+var request = require('supertest')
 
 // Database configuration
 // Use mongojs to hook the database to the db variable
 var db = mongojs('test', ['data'])
+var userEmail = mongojs('test', ['emails'])
 
 // This makes sure that any errors are logged if mongodb runs into an issue
 db.on("error", function(error) {
@@ -104,14 +106,19 @@ app.get('/history', function(req, res) {
             res.send(found)
         }
     })
-})
-
-app.get('/home', function(req, res) {
-
-})
 
 app.listen(PORT, function() {
     console.log(`App running on port ${PORT}!`)
+    // sample new temp/rh data every 15 minutes and post it to db by calling /post route
+    setInterval(function() {
+        request(app)
+            .get('/post')
+            .end(function(err, res) {
+                if (err) {
+                    console.log(err)
+                } 
+        })
+    }, 900000)
 })
 
 
