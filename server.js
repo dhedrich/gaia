@@ -91,22 +91,22 @@ app.get('/post', function(req, res) {
                         Current humidity: ${newEntry.rh} %
                         
                         Thank you for using Gaia.`
-                    }
 
-                    var mailOptions = {
-                        from: 'gaiaprojectapp@gmail.com',
-                        to: email,
-                        subject: 'Gaia: Out of Range',
-                        text: text
-                    }
-
-                    transporter.sendMail(mailOptions, function(error, info) {
-                        if (error) {
-                            console.log(error)
-                        } else {
-                            console.log(`Email sent: ${info.response}`)
+                        var mailOptions = {
+                            from: 'gaiaprojectapp@gmail.com',
+                            to: email,
+                            subject: 'Gaia: Out of Range',
+                            text: text
                         }
-                    })
+
+                        transporter.sendMail(mailOptions, function(error, info) {
+                            if (error) {
+                                console.log(error)
+                            } else {
+                                console.log(`Email sent: ${info.response}`)
+                            }
+                        })
+                    }
                 }
             })
         }

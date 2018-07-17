@@ -41,11 +41,14 @@ $(document).ready(function() {
 
   function renderTable(res) {
     // empty recents table
-    $('#recentsTable').empty().append(`<tr>
-        <th>Timestamp</th>
-        <th>Temperature</th>
-        <th>Humidity</th>
-      </tr>`)
+    $('#recentsTable').empty().append(`<thead>
+          <tr class="table-primary">
+            <th id="table-left" scope="col"></th>  
+            <th scope="col">Timestamp</th>
+            <th scope="col">Temperature</th>
+            <th id="table-right" scope="col">Humidity</th>
+          </tr>
+        </thead>`)
 
     // set max length of table to 10 entries
     var limit = 0
@@ -54,15 +57,18 @@ $(document).ready(function() {
     }
     
     // post data to table
+    var count = 1 
     for (var i = res.length - 1; i >= limit; i--) {
       var timestamp = res[i].timestamp
       var temp = res[i].temp
       var rh = res[i].rh
       $('#recentsTable').append(`<tr>
+        <th scope="row">${count}</th>
         <td>${timestamp}</td>
         <td>${temp} °C</td>
         <td>${rh} %</td>
       </tr>`)
+      count++
     }
 
     // update current temp/rh
