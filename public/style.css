@@ -28,9 +28,18 @@ a {
 
 .currData { 
     font-size: 84px;
+    text-align: center;
+}
+
+.currHead {
+    text-align: center;
 }
 
 .jumbotron {
     margin-top: 100px;
     background-color: #d9eee8
+}
+
+#submit {
+    margin-bottom:60px;
 }

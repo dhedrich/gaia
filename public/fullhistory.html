@@ -4,32 +4,48 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://bootswatch.com/4/minty/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+
     <title>Gaia - History</title>
 </head>
-<body>
-    <h1>Gaia</h1>
+    <body>
+        <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-primary">
+            <a class="navbar-brand" href="#">GAIA</a>
+        </nav>
+        <div class="container">
+            <div class="jumbotron">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h2 class="currHead">current temp</h2>
+                        <div class="currData" id="currTemp">XX °C</div>
+                    </div>
+                    <div class="col-md-6">
+                        <h2 class="currHead">current humidity</h2>
+                        <div class="currData" id="currRH">XX %</div>
+                    </div>
+                </div>
+            </div>
 
-    <h2>current temperature</h2>
-    <div id="currTemp">XX °C</div>
+            <h2 class="section-header">recents</h2>
+            <table class="table" id="recentsTable">
+                <thead>
+                    <tr>
+                        <th id="table-left" scope="col"></th>  
+                        <th scope="col">Timestamp</th>
+                        <th scope="col">Temperature</th>
+                        <th id="talbe-right" scope="col">Humidity</th>
+                    </tr>
+                </thead>
+            </table>
 
-    <h2>current humidity</h2>
-    <div id="currRH">XX %</div>
-
-    <h2>recents</h2>
-    <table id="recentsTable">
-        <tr>
-            <th>Timestamp</th>
-            <th>Temperature</th>
-            <th>Humidity</th>
-        </tr>
-    </table>
-
-    <a href="/index.html">Home</a>
-
+            <a id="text-link" href="/index.html">Home</a>
+        </div>
     <script
   src="https://code.jquery.com/jquery-3.3.1.min.js"
   integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
   crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js" integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em" crossorigin="anonymous"></script>
     <script src="history.js"></script>
 </body>
 </html>
